@@ -395,6 +395,23 @@ module Easemob
       http_submit uri, req
     end
 
+    def send_message_to_user(token,from,target,message)
+      url = "#{@base_url}/messages"
+      target = [target] if !target.is_a?(Array)
+      header = token_header token
+      params = {
+          target_type: "users",
+          msg: {type:"txt",msg:message},
+          from: from,
+          target: target
+          #ext:{}
+      }
+      uri, req = @http_client.post_request url, params, header
+      http_submit uri, req
+    end
+
+
+
     private
 
     def token_header(token)
